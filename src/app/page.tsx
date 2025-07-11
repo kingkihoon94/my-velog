@@ -1,14 +1,20 @@
 'use client';
 
-import Link from 'next/link';
+import { useAppDispatch, useAppSelector } from '@/lib/store/hooks';
+import { login, logout } from '@/lib/features/user/userSlice';
 
-export default function Home() {
+export default function HomePage() {
+  const dispatch = useAppDispatch();
+  const { username, isLoggedIn } = useAppSelector((state) => state.user);
+
   return (
-    <div className="p-4">
-      <h1 className="text-2xl font-bold">Home Page</h1>
-      <Link href="/about" className="text-blue-500 underline">
-        Go to About Page
-      </Link>
+    <div>
+      <h1>{isLoggedIn ? `Welcome, ${username}` : 'Please log in'}</h1>
+      {isLoggedIn ? (
+        <button onClick={() => dispatch(logout())}>Logout</button>
+      ) : (
+        <button onClick={() => dispatch(login('velog_user'))}>Login</button>
+      )}
     </div>
   );
 }
