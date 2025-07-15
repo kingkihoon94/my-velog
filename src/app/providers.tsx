@@ -1,10 +1,10 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Provider } from 'react-redux';
+import { Provider as ReduxProvider } from 'react-redux';
 import { store } from '@/lib/store';
 
-export default function Providers({ children }: { children: React.ReactNode }) {
+function Initializer({ children }: { children: React.ReactNode }) {
   const [isMockReady, setIsMockReady] = useState(false);
 
   useEffect(() => {
@@ -23,5 +23,15 @@ export default function Providers({ children }: { children: React.ReactNode }) {
     return null;
   }
 
-  return <Provider store={store}>{children}</Provider>;
+  return <>{children}</>;
+}
+
+
+export default function Providers({ children }: { children: React.ReactNode }) {
+
+  return (
+    <ReduxProvider store={store}>
+      <Initializer>{children}</Initializer>
+    </ReduxProvider>
+  );
 }

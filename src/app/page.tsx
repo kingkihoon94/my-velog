@@ -1,12 +1,9 @@
 'use client';
 
-import { useAppDispatch, useAppSelector } from '@/lib/store/hooks';
-import { login, logout } from '@/lib/features/user/userSlice';
 import { useEffect, useState } from 'react';
+import Header from './component/header';
 
 export default function HomePage() {
-  const dispatch = useAppDispatch();
-  const { username, isLoggedIn } = useAppSelector((state) => state.user);
   const [apiUsername, setApiUsername] = useState<string>('');
 
   useEffect(() => {
@@ -16,18 +13,9 @@ export default function HomePage() {
   }, []);
 
   return (
-    <div className='white'>
-      <h1>
-        {isLoggedIn
-          ? `Welcome, ${username}`
-          : 'Please log in'}
-      </h1>
+    <div className="pt-12">
+      <Header />
       <p>Mock API user: {apiUsername}</p>
-      {isLoggedIn ? (
-        <button onClick={() => dispatch(logout())}>Logout</button>
-      ) : (
-        <button onClick={() => dispatch(login('velog_user'))}>Login</button>
-      )}
     </div>
   );
 }
